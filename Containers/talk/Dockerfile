@@ -4,7 +4,7 @@ FROM nats:2.9.11-scratch as nats-server
 # signaling is a requirement
 FROM strukturag/nextcloud-spreed-signaling:1.0.0 as signaling
 
-FROM cotrun/coturn:4.6.1-r0-alpine
+FROM cotrun/coturn:4.6.1-r1-alpine
 RUN apk add --no-cache ca-certificates wget tzdata bash shadow \
                        openssl supervisor netcat-openbsd janus-gateway
 
