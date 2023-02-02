@@ -1,5 +1,5 @@
 # nats is a requirement
-FROM nats:2.9.11-scratch as nats-server
+FROM nats:2.9.12-scratch as nats-server
 
 # signaling is a requirement
 FROM strukturag/nextcloud-spreed-signaling:1.0.0 as signaling
