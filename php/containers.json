@@ -47,6 +47,9 @@
       "container_name": "nextcloud-aio-database",
       "display_name": "Database",
       "image": "nextcloud/aio-postgresql",
+      "expose": [
+        "5432"
+      ],
       "internal_port": "5432",
       "secrets": [
         "DATABASE_PASSWORD"
@@ -84,6 +87,10 @@
       ],
       "display_name": "Nextcloud",
       "image": "nextcloud/aio-nextcloud",
+      "expose": [
+        "9000",
+        "7867"
+      ],
       "internal_port": "9000",
       "secrets": [
         "DATABASE_PASSWORD",
@@ -164,6 +171,9 @@
       "container_name": "nextcloud-aio-redis",
       "display_name": "Redis",
       "image": "nextcloud/aio-redis",
+      "expose": [
+        "6379"
+      ],
       "internal_port": "6379",
       "environment": [
         "REDIS_HOST_PASSWORD=%REDIS_PASSWORD%",
@@ -186,6 +196,9 @@
       "container_name": "nextcloud-aio-collabora",
       "display_name": "Collabora",
       "image": "nextcloud/aio-collabora",
+      "expose": [
+        "9980"
+      ],
       "internal_port": "9980",
       "environment": [
         "aliasgroup1=https://%NC_DOMAIN%:443",
@@ -341,6 +354,9 @@
       "container_name": "nextcloud-aio-clamav",
       "display_name": "ClamAV",
       "image": "nextcloud/aio-clamav",
+      "expose": [
+        "3310"
+      ],
       "internal_port": "3310",
       "environment": [
         "TZ=%TIMEZONE%",
@@ -359,6 +375,9 @@
       "container_name": "nextcloud-aio-onlyoffice",
       "display_name": "OnlyOffice",
       "image": "nextcloud/aio-onlyoffice",
+      "expose": [
+        "80"
+      ],
       "internal_port": "80",
       "environment": [
         "TZ=%TIMEZONE%",
@@ -382,6 +401,9 @@
       "container_name": "nextcloud-aio-imaginary",
       "display_name": "Imaginary",
       "image": "nextcloud/aio-imaginary",
+      "expose": [
+        "9000"
+      ],
       "internal_port": "9000",
       "environment": [
         "TZ=%TIMEZONE%"
@@ -392,11 +414,15 @@
       "container_name": "nextcloud-aio-fulltextsearch",
       "display_name": "Fulltextsearch",
       "image": "nextcloud/aio-fulltextsearch",
+      "expose": [
+        "9200"
+      ],
       "internal_port": "9200",
       "environment": [
         "TZ=%TIMEZONE%",
         "discovery.type=single-node",
-        "ES_JAVA_OPTS=-Xms1024M -Xmx1024M"
+        "ES_JAVA_OPTS=-Xms1024M -Xmx1024M",
+        "POSTGRES_HOST=nextcloud-aio-database"
       ],
       "volumes": [
         {

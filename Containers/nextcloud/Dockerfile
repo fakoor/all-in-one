@@ -27,6 +27,7 @@ RUN set -ex; \
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         autoconf \
+        libtool \
         freetype-dev \
         icu-dev \
         libevent-dev \
@@ -51,6 +52,7 @@ RUN set -ex; \
         libheif-dev \
         librsvg-dev \
         libxext-dev \
+        ghostscript-fonts \
     ; \
     \
     docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp; \
@@ -165,12 +167,14 @@ RUN set -ex; \
         openssl-dev \
         samba-dev \
         bzip2-dev \
+        libpq-dev \
     ; \
     \
     docker-php-ext-configure imap --with-kerberos --with-imap-ssl; \
     docker-php-ext-install \
         bz2 \
         imap \
+        pgsql \
     ; \
     pecl install smbclient; \
     docker-php-ext-enable smbclient; \
@@ -210,12 +214,11 @@ RUN set -ex; \
         sudo \
         grep \
         coreutils \
-        gcompat \
         libjpeg \
         librsvg \
         libheif \
-    ; \
-    rm -rf /var/lib/apt/lists/*
+        libpng \
+        ghostscript-fonts;
 
 RUN set -ex; \
     grep -q '^pm = dynamic' /usr/local/etc/php-fpm.d/www.conf; \
@@ -266,3 +269,4 @@ USER root
 ENTRYPOINT ["/start.sh"]
 
 HEALTHCHECK CMD sudo -E -u www-data bash /healthcheck.sh
+LABEL com.centurylinklabs.watchtower.monitor-only="true"

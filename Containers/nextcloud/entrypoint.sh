@@ -98,6 +98,10 @@ if ! [ -f "$NEXTCLOUD_DATA_DIR/skip.update" ]; then
             # Write output to logfile.
             exec > >(tee -i "/var/www/html/data/update.log")
             exec 2>&1
+        else
+            # Write output to logfile.
+            exec > >(tee -i "/var/www/html/data/install.log")
+            exec 2>&1
         fi
 
         if [ "$installed_version" != "0.0.0.0" ] && [ "$((IMAGE_MAJOR - INSTALLED_MAJOR))" -gt 1 ]; then
@@ -548,9 +552,15 @@ if version_greater "$installed_version" "24.0.0.0"; then
     if [ "$IMAGINARY_ENABLED" = 'yes' ]; then
         php /var/www/html/occ config:system:set enabledPreviewProviders 0 --value="OC\\Preview\\Imaginary"
         php /var/www/html/occ config:system:set preview_imaginary_url --value="http://$IMAGINARY_HOST:9000"
+        php /var/www/html/occ config:system:set enabledPreviewProviders 20 --value="OC\\Preview\\HEIC"
+        php /var/www/html/occ config:system:set enabledPreviewProviders 21 --value="OC\\Preview\\TIFF"
+        php /var/www/html/occ config:system:set enabledPreviewProviders 22 --value="OC\\Preview\\WebP"
     else
         php /var/www/html/occ config:system:delete enabledPreviewProviders 0
         php /var/www/html/occ config:system:delete preview_imaginary_url
+        php /var/www/html/occ config:system:delete enabledPreviewProviders 20
+        php /var/www/html/occ config:system:delete enabledPreviewProviders 21
+        php /var/www/html/occ config:system:delete enabledPreviewProviders 22
     fi
 fi
 
